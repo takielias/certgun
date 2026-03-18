@@ -2,7 +2,7 @@
 
 Cloudflare Origin Certificate automation for Coolify servers.
 
-certgun handles the full lifecycle of Cloudflare Origin CA certificates: generating keys, issuing certificates, deploying them over SSH, configuring Traefik, and managing DNS records. It is designed for self-hosted Coolify setups where you want proper SSL termination with Cloudflare's Full (Strict) mode.
+certgun handles the full lifecycle of Cloudflare Origin CA certificates: generating keys, issuing certificates, deploying them over SSH, configuring the proxy (Traefik or Caddy), and managing DNS records. It is designed for self-hosted Coolify setups where you want proper SSL termination with Cloudflare's Full (Strict) mode.
 
 ## Install
 
@@ -33,7 +33,7 @@ Grab the archive for your platform from the [releases](https://github.com/takiel
 
 ## Quick start
 
-1. Run the interactive setup to configure your Cloudflare API token, SSH credentials, and server details:
+1. Run the interactive setup to configure your Cloudflare API token and SSH credentials:
 
    ```sh
    certgun init
@@ -42,7 +42,13 @@ Grab the archive for your platform from the [releases](https://github.com/takiel
 2. Issue and deploy a certificate for your domain:
 
    ```sh
-   certgun setup
+   certgun add 103.21.44.10 docs.example.com
+   ```
+
+   Wildcard domains are also supported:
+
+   ```sh
+   certgun add 103.21.44.10 *.example.com
    ```
 
 3. List active certificates:
@@ -54,14 +60,16 @@ Grab the archive for your platform from the [releases](https://github.com/takiel
 4. Remove a certificate and clean up:
 
    ```sh
-   certgun remove
+   certgun remove docs.example.com
    ```
 
 ## What it does
 
 - Issues Cloudflare Origin CA certificates (valid for up to 15 years)
 - Deploys the certificate and private key to your server over SSH
-- Configures Traefik with the appropriate TLS entrypoints and certificate resolvers
+- Auto-detects whether the server runs Traefik or Caddy
+- Configures the proxy with the appropriate TLS settings
+- Supports wildcard domains (`*.example.com`)
 - Creates or updates Cloudflare DNS records pointing to your server
 - Sets the domain's SSL/TLS mode to Full (Strict) in Cloudflare
 
@@ -73,4 +81,4 @@ curl -fsSL https://raw.githubusercontent.com/takielias/certgun/main/uninstall.sh
 
 ## License
 
-MIT
+Freeware
