@@ -1,4 +1,4 @@
-# certgun
+# CertGun
 
 Cloudflare Origin Certificate automation for Coolify servers.
 
