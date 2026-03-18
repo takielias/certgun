@@ -1,0 +1,10 @@
+# Ignore everything by default
+*
+
+# Allow distribution files
+!.gitignore
+!README.md
+!LICENSE
+!install.sh
+!install.ps1
+!uninstall.sh
