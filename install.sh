@@ -4,7 +4,7 @@ set -e
 # certgun installer
 # Usage: curl -fsSL https://raw.githubusercontent.com/takielias/certgun/main/install.sh | sh
 
-VERSION="0.2.0"
+VERSION="0.3.0"
 REPO="takielias/certgun"
 BINARY="certgun"
 INSTALL_DIR="/usr/local/bin"
@@ -52,15 +52,15 @@ install_binary() {
     trap 'rm -rf "$TMPDIR"' EXIT
 
     if command -v curl >/dev/null 2>&1; then
-        curl -fsSL "$URL" -o "${TMPDIR}/${ARCHIVE}" || error "Download failed. Check https://github.com/${REPO}/releases"
+        curl -fsSL "$URL" -o "${TMPDIR}/${ARCHIVE}" || { warn "Download failed."; return 1; }
     elif command -v wget >/dev/null 2>&1; then
-        wget -q "$URL" -O "${TMPDIR}/${ARCHIVE}" || error "Download failed. Check https://github.com/${REPO}/releases"
+        wget -q "$URL" -O "${TMPDIR}/${ARCHIVE}" || { warn "Download failed."; return 1; }
     else
         error "curl or wget required"
     fi
 
     info "Extracting..."
-    tar -xzf "${TMPDIR}/${ARCHIVE}" -C "$TMPDIR"
+    tar -xzf "${TMPDIR}/${ARCHIVE}" -C "$TMPDIR" || { warn "Extraction failed."; return 1; }
 
     info "Installing to ${INSTALL_DIR}/${BINARY}..."
     if [ -w "$INSTALL_DIR" ]; then
@@ -107,8 +107,8 @@ main() {
     info "Detected: ${OS}/${ARCH}"
 
     # Try binary download first, fall back to source
-    install_binary 2>/dev/null || {
-        warn "Binary download failed, building from source..."
+    install_binary || {
+        warn "Falling back to building from source..."
         install_from_source
     }
 
