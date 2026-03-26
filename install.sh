@@ -4,7 +4,7 @@ set -e
 # certgun installer
 # Usage: curl -fsSL https://raw.githubusercontent.com/takielias/certgun/main/install.sh | sh
 
-VERSION="0.1.0"
+VERSION="0.2.0"
 REPO="takielias/certgun"
 BINARY="certgun"
 INSTALL_DIR="/usr/local/bin"

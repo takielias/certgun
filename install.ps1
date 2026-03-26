@@ -1,7 +1,7 @@
 # certgun installer for Windows
 # Usage: irm https://raw.githubusercontent.com/takielias/certgun/main/install.ps1 | iex
 
-$Version = "0.1.0"
+$Version = "0.2.0"
 $Repo = "takielias/certgun"
 $Binary = "certgun"
 
