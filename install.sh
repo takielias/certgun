@@ -4,7 +4,7 @@ set -e
 # certgun installer
 # Usage: curl -fsSL https://raw.githubusercontent.com/takielias/certgun/main/install.sh | sh
 
-VERSION="0.3.0"
+VERSION="0.4.0"
 REPO="takielias/certgun"
 BINARY="certgun"
 INSTALL_DIR="/usr/local/bin"
@@ -107,10 +107,7 @@ main() {
     info "Detected: ${OS}/${ARCH}"
 
     # Try binary download first, fall back to source
-    install_binary || {
-        warn "Falling back to building from source..."
-        install_from_source
-    }
+    install_binary
 
     printf "\n${GREEN}Get started:${NC}\n"
     printf "  certgun init\n"
